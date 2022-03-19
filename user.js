@@ -36,3 +36,6 @@ user_pref("browser.urlbar.suggest.calculator", true);
 // Draw in Titlebar
 // user_pref("browser.tabs.drawInTitlebar", true);
 // user_pref("browser.tabs.inTitlebar",        1); // Nightly, 96 Above
+
+// PATCH: List all tabs always appear
+user_pref("browser.tabs.tabmanager.enabled", true)
