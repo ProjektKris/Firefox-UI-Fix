@@ -2932,29 +2932,6 @@ menuitem.openintabs-menuitem,
   ); /* Compact: 28px, Normal: 33px, Touch: 38px */
 }
 
-/* Pinned Tab - Titlechanged Indicator position fix */
-.tabbrowser-tab:is([image], [pinned]) > .tab-stack > .tab-content[attention]:not([selected="true"]),
-.tabbrowser-tab > .tab-stack > .tab-content[pinned][titlechanged]:not([selected="true"]) {
-  /* Original: center bottom calc(6.5px + var(--tabs-navbar-shadow-size)); */
-  background-position-y: bottom calc(2.5px + var(--tabs-navbar-shadow-size)) !important;
-}
-:root[uidensity="compact"]
-  .tabbrowser-tab:is([image], [pinned])
-  > .tab-stack
-  > .tab-content[attention]:not([selected="true"]),
-:root[uidensity="compact"] .tabbrowser-tab > .tab-stack > .tab-content[pinned][titlechanged]:not([selected="true"]) {
-  /* Original: center bottom calc(6.5px + var(--tabs-navbar-shadow-size)); */
-  background-position-y: bottom calc(0.5px + var(--tabs-navbar-shadow-size)) !important;
-}
-:root[uidensity="touch"]
-  .tabbrowser-tab:is([image], [pinned])
-  > .tab-stack
-  > .tab-content[attention]:not([selected="true"]),
-:root[uidensity="touch"] .tabbrowser-tab > .tab-stack > .tab-content[pinned][titlechanged]:not([selected="true"]) {
-  /* Original: center bottom calc(6.5px + var(--tabs-navbar-shadow-size)); */
-  background-position-y: bottom calc(4.5px + var(--tabs-navbar-shadow-size)) !important;
-}
-
 /*= Tool Bar - Button Padding ================================================*/
 :root[uidensity="compact"] {
   --toolbarbutton-outer-padding: 2px !important; /* Original: 3px, General is 2px */
@@ -3553,11 +3530,11 @@ tab[visuallyselected] > stack::after {
 }
 
 /** Clipped tabs - Letters cleary *********************************************/
-:root {
-  --inline-tab-padding: 6px !important; /* Original: 8px */
+#tabbrowser-tabs[closebuttons="activetab"] {
+  --inline-tab-padding: 7px !important; /* Original: 8px */
 }
-:root[uidensity="touch"] {
-  --inline-tab-padding: 8px !important; /* Original: 8px */
+#tabbrowser-tabs[overflow="true"] {
+  --inline-tab-padding: 6px !important; /* Original: 8px */
 }
 
 .tab-content[pinned] {
@@ -3784,12 +3761,21 @@ tab[visuallyselected] > stack::after {
   display: none;
 }
 
+.tabbrowser-tab {
+  --container-position-y: 11px;
+}
+:root[uidensity="compact"] .tabbrowser-tab {
+  --container-position-y: 10px;
+}
+:root[uidensity="touch"] .tabbrowser-tab {
+  --container-position-y: 12px;
+}
 .tab-content:not([titlechanged])::before {
   /* Box Model */
   content: "";
   display: block;
   position: absolute !important;
-  transform: translate(9px, 12px) !important;
+  transform: translate(9px, var(--container-position-y)) !important;
 
   /* Shape */
   border-bottom: 2px solid var(--identity-icon-color);
@@ -3814,7 +3800,7 @@ tab[visuallyselected] > stack::after {
 
 /* Pinned Tab */
 .tabbrowser-tab[pinned] .tab-content::before {
-  transform: translateY(12px) !important;
+  transform: translateY(var(--container-position-y)) !important;
   width: 16px;
 }
 
@@ -3843,6 +3829,12 @@ tab[visuallyselected] > stack::after {
   background-position-x: 30%, 50%, 70% !important;
 }
 
+.tabbrowser-tab:is([image], [pinned]) > .tab-stack > .tab-content[attention]:not([selected="true"]),
+.tabbrowser-tab > .tab-stack > .tab-content[pinned][titlechanged]:not([selected="true"]) {
+  /* Original: center bottom calc(6.5px + var(--tabs-navbar-shadow-size)); */
+  background-position-y: top calc(0.5px + 50% + var(--container-position-y)) !important;
+}
+
 /* Pinned Tab - Titlechanged & soundplaying */
 .tabbrowser-tab:is([image], [pinned])[usercontextid]:is([soundplaying], [muted], [activemedia-blocked])
   > .tab-stack
@@ -3869,7 +3861,7 @@ tab[visuallyselected] > stack::after {
 }
 
 /** Fullscreen - Overlap toolbar **********************************************/
-@supports not -moz-bool-pref("layout.css.osx-font-smoothing.enabled") {
+@supports -moz-bool-pref("browser.fullscreen.autohide") {
   :root[sizemode="fullscreen"] #navigator-toolbox {
     position: fixed !important; /* Needed for content to take up entire height */
     display: block !important; /* Needed for content to take up entire height */
