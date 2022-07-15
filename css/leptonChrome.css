@@ -3448,6 +3448,12 @@
   #ContentSelectDropdown > menupopup > menuitem {
     padding-block: 0 !important;
   }
+  @media (-moz-gtk-csd-available) {
+    #ContentSelectDropdown > menupopup > menucaption,
+    #ContentSelectDropdown > menupopup > menuitem {
+      padding-block: var(--menu-padding) !important;
+    }
+  }
 
   @supports -moz-bool-pref("layout.css.osx-font-smoothing.enabled") {
     :root:not([uidensity="touch"]) .menu-text,
@@ -5451,13 +5457,15 @@
   }
 
   #appMenu-fxa-status2,
-  #appMenu-zoom-controls2 {
+  #appMenu-zoom-controls2,
+  #appMenu-zoom-controls {
     align-items: center;
     padding-top: var(--arrowpanel-menuimageblank-padding-block) !important;
     padding-bottom: var(--arrowpanel-menuimageblank-padding-block) !important;
   }
 
-  #appMenu-zoom-controls2::before {
+  #appMenu-zoom-controls2::before,
+  #appMenu-zoom-controls::before {
     margin-inline-end: 0 !important;
   }
 
@@ -5540,7 +5548,8 @@
       padding-bottom: var(--arrowpanel-menuitemblank-padding) !important;
     }
 
-    #appMenu-zoom-controls2 {
+    #appMenu-zoom-controls2,
+    #appMenu-zoom-controls {
       padding-inline-start: var(--arrowpanel-menuimageblank-padding-horizontal) !important;
     }
   }
@@ -5557,7 +5566,8 @@
       padding-bottom: var(--arrowpanel-menuitemblank-padding-block) !important;
     }
 
-    #appMenu-zoom-controls2 {
+    #appMenu-zoom-controls2,
+    #appMenu-zoom-controls {
       padding-inline-start: var(--arrowpanel-menuimageblank-padding-horizontal) !important;
     }
   }
@@ -5603,7 +5613,8 @@
       list-style-image: url("chrome://global/skin/icons/search-glass.svg");
     }
 
-    #appMenu-zoom-controls2::before {
+    #appMenu-zoom-controls2::before,
+    #appMenu-zoom-controls::before {
       content: url("../icons/screenshot.svg");
     }
   }
